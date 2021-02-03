@@ -1,7 +1,7 @@
-package com.santana.spring_udemy.domain;
+package com.santana.spring_udemy.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.santana.spring_udemy.domain.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.santana.spring_udemy.entities.enums.OrderStatus;
 
 @Entity
 @Table(name="tb_order")
@@ -20,9 +21,11 @@ public class Order implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	private Date moment;
-	private OrderStatus orderStatus;
+	private Long id;
+	
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant moment;
+	private Integer orderStatus;
 	
 	@ManyToOne
 	@JoinColumn(name="client_id")
@@ -32,35 +35,35 @@ public class Order implements Serializable{
 		
 	}
 	
-	public Order(Integer id, Date moment, OrderStatus orderStatus, User client) {
+	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		this.id = id;
 		this.moment = moment;
-		this.orderStatus = orderStatus;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Date getMoment() {
+	public Instant getMoment() {
 		return moment;
 	}
 
-	public void setMoment(Date moment) {
+	public void setMoment(Instant moment) {
 		this.moment = moment;
 	}
 
 	public OrderStatus getOrderStatus() {
-		return orderStatus;
+		return OrderStatus.toEnum(orderStatus);
 	}
 
 	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
+		this.orderStatus = orderStatus.getCode();
 	}
 	
 	public User getClient() {

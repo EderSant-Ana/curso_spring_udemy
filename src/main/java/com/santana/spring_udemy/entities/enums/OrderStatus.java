@@ -1,4 +1,4 @@
-package com.santana.spring_udemy.domain.enums;
+package com.santana.spring_udemy.entities.enums;
 
 public enum OrderStatus {
 	
@@ -33,7 +33,7 @@ public enum OrderStatus {
 				return x;
 			}
 		}
-		throw new IllegalArgumentException("Id inválido: " + code);
+		throw new IllegalArgumentException("Inválid OrderStatus code: " + code);
 	}
 	
 	
