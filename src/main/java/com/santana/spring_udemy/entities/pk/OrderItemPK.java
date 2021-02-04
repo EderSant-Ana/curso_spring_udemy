@@ -1,10 +1,13 @@
-package com.santana.spring_udemy.entities;
+package com.santana.spring_udemy.entities.pk;
 
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.santana.spring_udemy.entities.Order;
+import com.santana.spring_udemy.entities.Product;
 
 @Embeddable
 public class OrderItemPK implements Serializable{
